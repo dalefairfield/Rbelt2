@@ -1,0 +1,40 @@
+<h3> Hello <%=session[:first_name]%></h3>
+
+<%=flash[:message]%>
+<form action='/groups/create' method='post'>
+  <input type='hidden' name='authenticity_token' value='<%= form_authenticity_token %>'>
+  <h5>New Group</h5>
+  <p>Organization Name:<input type='text' name='name'></p>
+  <p>Description of the organization:<input type='text' name='description'></p>
+  <input type='submit' value='Create Group'>
+</form>
+
+<table>
+  <tr>
+    <th> Orgianization Name: </th>
+    <th> Description </th>
+    <th> Memebers </th>
+  </tr>
+
+  <%@groups.each do |x|%>
+    <tr>
+      <!-- should be name  -->
+      <td><a href="/groups/<%=x.id%>"><%=x.name%></a></td>
+
+      <!-- ideas -->
+      <td><%=x.description%></td>
+
+      <!-- Number of members -->
+      <td><%=x.members.count%></td>
+
+      <!-- user delete button -->
+    <% if session[:user_id]== x.user_id%>
+    <td><form action='/groups/delete/<%=x.id%>' method='post'>
+        <input type="hidden" name="_method" value="delete">
+        <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+        <button type="submit" >Delete</button>
+      </form></td>
+    <%end%>
+    </tr>
+  <%end%>
+</table>

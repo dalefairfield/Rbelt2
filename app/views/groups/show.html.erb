@@ -1,0 +1,26 @@
+<a href="/groups/index">Back to Group Dashboard</a>
+<!-- join button -->
+<%=flash[:message]%>
+<p>Organization: <%=@show.name%></p>
+<p>Description of the organization: <%=@show.description%></p>
+
+      <form action='/groups/join' method='post'>
+          <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+          <input type="hidden" name="group_id" value="<%=@show.id%>">
+          <button type="submit" >Join Group</button>
+        </form><%=flash[:message]%>
+
+<p>Create by <%=@show.user.first_name%> <%=@show.user.last_name%></p>
+<p>Members of <%=@show.name%>:</p>
+
+<%@join.each do |x|%>
+  <p><%=x.user.first_name%> <%=x.user.last_name%></p>
+  <% if session[:user_id]== x.user_id%>
+  <form action='/members/delete/<%=x.user_id%>' method='post'>
+      <input type="hidden" name="_method" value="delete">
+      <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+      <input type="hidden" name="group_id" value="<%=x.user_id%>">
+      <button type="submit" >Leave Group</button>
+    </form>
+  <%end%>
+<%end%>

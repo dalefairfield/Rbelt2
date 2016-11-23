@@ -17,7 +17,7 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres #default if not created
+  username: ubuntu #default if not created
   password: password #default if not created
   pool: 5
   # For details on connection pooling, see rails configuration guide
@@ -32,7 +32,7 @@ development:
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: RubyBelt2
+  #username: ubuntu
 
   # The password associated with the postgres role (username).
   #password:
@@ -84,5 +84,5 @@ test:
 production:
   <<: *default
   database: RubyBelt2_production
-  username: RubyBelt2
+  username: ubuntu
   password: <%= ENV['RUBYBELT2_DATABASE_PASSWORD'] %>
